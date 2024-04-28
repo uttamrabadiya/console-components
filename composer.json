@@ -17,5 +17,8 @@
         "nunomaduro/termwind": "^2.0",
         "laravel/prompts": "^0.1.12",
         "nesbot/carbon": "^2.72.2|^3.0"
+    },
+    "conflict": {
+        "illuminate/console": "*"
     }
 }
