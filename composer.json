@@ -1,5 +1,7 @@
 {
     "name": "uttamrabadiya/console-components",
+    "description": "Lightweight PHP package designed to enhance the output of your CLI applications using Termwind & Laravel Prompts",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "ConsoleComponents\\": "src/"
