@@ -2,7 +2,6 @@
 
 namespace ConsoleComponents\View\Components;
 
-use Carbon\CarbonInterval;
 use Illuminate\Contracts\Support\Arrayable;
 use ReflectionClass;
 use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
@@ -137,7 +136,31 @@ abstract class Component
         $runTime = ($endTime - $startTime) * 1000;
 
         return $runTime > 1000
-            ? CarbonInterval::milliseconds($runTime)->cascade()->forHumans(short: true)
+            ? $this->formatRuntime($runTime)
             : number_format($runTime, 2).'ms';
     }
+
+    function formatRuntime($runTime): string
+    {
+        $seconds = floor($runTime / 1000);
+        $minutes = floor($seconds / 60);
+        $hours = floor($minutes / 60);
+
+        $formattedTime = '';
+
+        if ($hours > 0) {
+            $formattedTime .= $hours . 'h ';
+        }
+
+        if ($minutes > 0) {
+            $formattedTime .= ($minutes % 60) . 'm ';
+        }
+
+        if ($seconds > 0 && $hours == 0) {
+            $formattedTime .= ($seconds % 60) . 's';
+        }
+
+        return trim($formattedTime);
+    }
+
 }

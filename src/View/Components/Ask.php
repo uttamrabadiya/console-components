@@ -11,13 +11,16 @@ class Ask extends Component
      *
      * @param  string  $question
      * @param  string  $default
+     * @param  bool    $multiline
+     * @param  bool    $hidden
      * @return mixed
      */
-    public function render($question, $default = null, $multiline = false)
+    public function render($question, $default = null, $multiline = false, $hidden = false)
     {
         return $this->usingQuestionHelper(
             fn () => $this->output->askQuestion(
                 (new Question($question, $default))
+                    ->setHidden($hidden)
                     ->setMultiline($multiline)
             )
         );
