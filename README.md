@@ -48,6 +48,7 @@ Writer::alert('Hello World!');
 use ConsoleComponents\Writer;
 
 Writer::ask('What would you like to build today?');
+Writer::ask('Something secret to ask', hidden: true); // Ask secretly
 ```
 <img src="art/ask.png" />
 
