@@ -4,6 +4,7 @@ namespace ConsoleComponents;
 
 use ConsoleComponents\View\Components\Factory;
 use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -26,6 +27,8 @@ class Writer
 {
     private static ?Factory $factory = null;
 
+    private static OutputInterface $output;
+
     /**
      * Dynamically handle calls into the component instance.
      *
@@ -39,11 +42,25 @@ class Writer
     {
         if (!self::$factory) {
             $input = new ArgvInput();
-            $output = new ConsoleOutput();
+            self::$output = new ConsoleOutput();
 
-            $outputStyle = new OutputStyle($input, $output);
+            $outputStyle = new OutputStyle($input, self::$output);
             self::$factory = new Factory($outputStyle);
         }
         return self::$factory->$method(...$parameters);
+    }
+
+    public static function fake(): void
+    {
+        $input = new ArgvInput();
+        self::$output = new BufferedOutput();
+
+        $outputStyle = new OutputStyle($input, self::$output);
+        self::$factory = new Factory($outputStyle);
+    }
+
+    public static function output(): OutputInterface
+    {
+        return self::$output;
     }
 }
