@@ -53,6 +53,7 @@ class Writer
     public static function fake(): void
     {
         $input = new ArgvInput();
+        $input->setInteractive(false);
         self::$output = new BufferedOutput();
 
         $outputStyle = new OutputStyle($input, self::$output);
